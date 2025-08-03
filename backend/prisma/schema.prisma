@@ -30,12 +30,13 @@ model User {
 model Transaction {
   id          Int      @id @default(autoincrement())
   amount      Float
-  type        String  // for INCOME or EXPENSE
+  type        String // for INCOME or EXPENSE
   date        DateTime @default(now())
   category    String
   description String?
-  userId      Int   @map("user_id")
+  userId      Int      @map("user_id")
   user        User     @relation(fields: [userId], references: [id])
+  deleted     Boolean  @default(false)
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 
