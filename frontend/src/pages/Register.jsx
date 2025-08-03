@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useState } from "react";
 
 const Register = () => {
@@ -39,58 +41,43 @@ const Register = () => {
         <div className="p-2 flex flex-col gap-4 justify-center items-center">
           <div className="flex gap-2 ">
             <label className="text-xl font-semibold">Name</label>
-            <input
+            <Input
               type="text"
               placeholder="Enter your Name"
               name="name"
               value={userData.name}
               onChange={handleInputChange}
-              className="p-1 border-black border-1 rounded"
             />
           </div>
           <div className="flex gap-2 ">
             <label className="text-xl font-semibold">Email</label>
-            <input
+            <Input
               type="email"
               placeholder="Enter your email"
               name="email"
               value={userData.email}
               onChange={handleInputChange}
-              className="p-1 border-black border-1 rounded"
               required
             />
           </div>
           <div className="flex gap-2 ">
             <label className="text-xl font-semibold">Password</label>
-            <input
+            <Input
               type="password"
               placeholder="Enter your Password"
               name="password"
               value={userData.password}
               onChange={handleInputChange}
-              className="p-1 border-black border-1 rounded"
               required
             />
           </div>
-          <div className="flex gap-2 ">
-            <label className="text-xl font-semibold">Confirm Password</label>
-            <input
-              type="password"
-              placeholder="Enter your Password"
-              name="password"
-              value={userData.password}
-              onChange={handleInputChange}
-              className="p-1 border-black border-1 rounded"
-              required
-            />
-          </div>
+       
 
-          <button
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          <Button
             type="submit"
           >
             {loading ? "Registering..." : "Register"}
-          </button>
+          </Button>
         </div>
       </form>
 

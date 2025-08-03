@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -44,35 +46,36 @@ const Login = () => {
         <div className="p-2 flex flex-col gap-4 justify-center items-center">
           <div className="flex gap-2  ">
             <label className="text-xl font-semibold">Email</label>
-            <input
+
+            <Input
+              id="email"
+              name="email"
               type="email"
               placeholder="Enter your email"
-              name="email"
               value={userData.email}
               onChange={handleInputChange}
-              className="p-1 border-black border-1 rounded"
-              required
-            />
-          </div>
-          <div className="flex gap-2 ">
-            <label className="text-xl font-semibold">Password</label>
-            <input
-              type="password"
-              placeholder="Enter your Password"
-              name="password"
-              value={userData.password}
-              onChange={handleInputChange}
-              className="p-1 border-black border-1 rounded"
               required
             />
           </div>
 
-          <button
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          <div className="flex gap-2 ">
+            <label className="text-xl font-semibold">Password</label>
+            <Input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Enter your password"
+              value={userData.password}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+
+          <Button
             type="submit"
           >
             {loading ? "Logging in..." : "Login"}
-          </button>
+          </Button>
         </div>
       </form>
 
