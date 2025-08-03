@@ -15,7 +15,6 @@ const register = async (req, res, next) => {
     }
 
     const hashPassword = await bcrypt.hash(password, 10);
-    console.log("hashPassword : ", hashPassword);
 
     const newUser = await prisma.user.create({
       data: {
@@ -25,15 +24,12 @@ const register = async (req, res, next) => {
         role: role || "USER",
       },
     });
-    console.log("newUser : ", newUser);
 
     const { password: _, ...userWithoutPassword } = newUser;
 
     const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-
-    console.log("token : ", token);
 
     res.cookie("token", token, {
       httpOnly: true,

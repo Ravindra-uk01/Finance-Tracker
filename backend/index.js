@@ -6,8 +6,7 @@ const authRoutes = require('./routes/auth');
 const transactionRoutes = require('./routes/transactions');
 const analyticsRoutes = require('./routes/analytics');
 const userRoutes = require('./routes/users');
-
-
+const { errorHandler } = require('./middlewares/error');
 
 
 const app = express();
@@ -44,7 +43,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // Error handling - need to be a logic for global error handling
-// app.use(errorHandler);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
