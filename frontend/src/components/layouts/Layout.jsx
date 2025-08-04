@@ -1,19 +1,13 @@
+import { useAuth } from "@/contexts/AuthContext";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Layout = ({ children }) => {
-  const user = {
-    role: "ADMIN", // Example user role, replace with actual user data
-    name: "John Doe", // Example user name, replace with actual user data
-  };
-
-//   const user = null;
-
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-
-    // logout user logic here
+    await logout();
     navigate("/login");
   };
 
@@ -79,7 +73,7 @@ const Layout = ({ children }) => {
 
       <footer className="bg-gray-800 text-white p-4">
         <div className="container mx-auto text-center">
-          © {new Date().getFullYear()} Personal Finance Tracker
+          © {new Date().getFullYear()} Personal Finance Tracker by Ravindra Singh Rayal
         </div>
       </footer>
     </div>

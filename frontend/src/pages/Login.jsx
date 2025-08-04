@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/contexts/AuthContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,6 +11,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const { login } = useAuth();
 
   const navigate = useNavigate();
 
@@ -21,17 +23,17 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setError('');
     setLoading(true);
+    
     try {
-      // login user logic her
-
-      console.log("Logging in with:", userData);
-      //   navigate("/");
+      await login(userData);
+      navigate('/');
     } catch (err) {
-      setError("Invalid credentials");
+      console.log('Login failed', err);
+      setError('Invalid credentials');
     } finally {
       setLoading(false);
     }

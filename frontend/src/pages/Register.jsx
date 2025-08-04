@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/contexts/AuthContext";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [error, setError] = useState("");
@@ -10,6 +12,8 @@ const Register = () => {
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
+  const { register } = useAuth();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -23,8 +27,8 @@ const Register = () => {
     setError("");
     setLoading(true);
     try {
-      // registration logic here
-      // After successful registration, you can redirect or show a success message
+      await register(userData);
+            navigate('/login');
     } catch (err) {
       console.error("Registration failed", err);
     } finally {

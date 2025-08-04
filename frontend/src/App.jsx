@@ -9,11 +9,12 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Transactions from './pages/Transactions'
 import Layout from './components/layouts/Layout';
+import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
 
   return (
-    <>
+    <AuthProvider>
      <Router>
         <Layout>
           <Routes>
@@ -26,7 +27,7 @@ function App() {
           </Routes>
         </Layout>
       </Router>
-    </>
+    </AuthProvider>
   )
 }
 
