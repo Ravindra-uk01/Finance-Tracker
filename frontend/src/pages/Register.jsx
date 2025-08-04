@@ -1,7 +1,8 @@
+import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/contexts/AuthContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
@@ -13,7 +14,13 @@ const Register = () => {
     password: "",
   });
   const navigate = useNavigate();
-  const { register } = useAuth();
+  const { register , user} = useAuth();
+
+  //  useEffect(() => {
+  //     if (user) {
+  //       navigate("/");
+  //     }
+  //   }, [user, navigate]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -23,15 +30,19 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     setError("");
     setLoading(true);
     try {
+      console.log('Registering user:', userData);
       await register(userData);
-            navigate('/login');
+      <Alert type="success" message="Registration successful!" />
+      navigate('/');
     } catch (err) {
       console.error("Registration failed", err);
-    } finally {
+    } 
+    finally {
       setLoading(false);
     }
   };

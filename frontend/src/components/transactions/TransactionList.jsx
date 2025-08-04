@@ -1,7 +1,7 @@
 import React from 'react'
 
 const TransactionList = ({transactions}) => {
-  if (transactions.length === 0) {
+  if (transactions?.length === 0) {
     return <div>No transactions found.</div>;
   }
 
@@ -18,7 +18,7 @@ const TransactionList = ({transactions}) => {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {transactions.map((transaction) => (
+          {transactions?.map((transaction) => (
             <tr key={transaction.id}>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{new Date(transaction.date).toLocaleDateString()}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{transaction.description}</td>

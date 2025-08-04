@@ -1,4 +1,4 @@
-import { getMe, login, logout } from "@/services/auth";
+import { getMe, login, logout, register } from "@/services/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext();
@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
+        setLoading(true);
         const { data } = await getMe();
         setUser(data);
       } catch (err) {
@@ -29,6 +30,11 @@ export const AuthProvider = ({ children }) => {
     setUser(data.user);
   };
 
+  const registerUser = async (userData) => {
+    const { data } = await register(userData);
+    setUser(data.user);
+  };
+
   const logoutUser = async () => {
     await logout();
     setUser(null);
@@ -39,6 +45,7 @@ export const AuthProvider = ({ children }) => {
     loading,
     login: loginUser,
     logout: logoutUser,
+    register: registerUser,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

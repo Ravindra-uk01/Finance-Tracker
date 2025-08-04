@@ -11,6 +11,8 @@ const getTransactions = async (req, res) => {
       perPage = 10,
     } = req.query;
 
+    console.log("Query params: ", req.query);
+
     const offset = (page - 1) * perPage;
     const where = {
       deleted: false,
@@ -37,7 +39,7 @@ const getTransactions = async (req, res) => {
       prisma.transaction.findMany({
         where,
         skip: offset,
-        take: parseInt(limit),
+        take: parseInt(perPage),
         orderBy: { date: "desc" },
       }),
       prisma.transaction.count({ where }),
@@ -54,6 +56,7 @@ const getTransactions = async (req, res) => {
         }
      });
   } catch (error) {
+    console.log('error fetching transactions: ', error);
     res.status(500).json({ error: "Failed to fetch transactions" });
   }
 };

@@ -1,7 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const prisma = require("../models/prisma");
-const { get } = require("../routes/auth");
 
 const register = async (req, res, next) => {
   try {
@@ -29,15 +28,17 @@ const register = async (req, res, next) => {
     const { password: _, ...userWithoutPassword } = newUser;
 
     const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "1d",
     });
+
 
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 3600000, // 1 hour
+      sameSite: process.env.NODE_ENV === 'production' ? "none":"",
+      maxAge: 1000 * 60 * 60 * 24,
     });
+
 
     res.status(201).json({
       message: "User registered successfully",
@@ -57,8 +58,6 @@ const login = async (req, res, next) => {
       where: { email },
     });
 
-    console.log("user : ", user);
-
     if (!user) {
       return res.status(400).json({ error: "Invalid email or password" });
     }
@@ -72,14 +71,14 @@ const login = async (req, res, next) => {
     const { password: _, ...userWithoutPassword } = user;
 
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "1d",
     });
 
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 3600000, 
+      sameSite: process.env.NODE_ENV === 'production' ? "none":"",
+      maxAge: 1000 * 60 * 60 * 24,
     });
 
     res.status(200).json({
@@ -105,9 +104,9 @@ const logout = async (req, res, next) => {
   }
 };
 
-const getMyProfile = async (req, res, next) => {
+const getMe = async (req, res, next) => {
   try {
-    const token = req.cookies.token;
+    const token = req.cookies?.token;
     if (!token) {
       return res.status(401).json({ error: "Unauthorized" });
     }
@@ -133,5 +132,5 @@ module.exports = {
   register,
   login,
   logout,
-  getMyProfile
+  getMe
 };

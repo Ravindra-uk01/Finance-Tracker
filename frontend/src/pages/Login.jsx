@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/contexts/AuthContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -11,9 +11,14 @@ const Login = () => {
     email: "",
     password: "",
   });
-  const { login } = useAuth();
-
+  const { login , user} = useAuth();
   const navigate = useNavigate();
+
+  //  useEffect(() => {
+  //   if (user) {
+  //     navigate("/");
+  //   }
+  // }, [user, navigate]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

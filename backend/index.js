@@ -7,34 +7,36 @@ const transactionRoutes = require('./routes/transactions');
 const analyticsRoutes = require('./routes/analytics');
 const userRoutes = require('./routes/users');
 const { errorHandler } = require('./middlewares/error');
+const cookieParser = require('cookie-parser');
 
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: process.env.FRONTEND_URL , credentials: true})); 
 app.use(express.json());
+app.use(cookieParser());
 
-// Rate limiting middleware
-const authLimiter = rateLimit({
-    winodowMs: 15*60*1000,
-    max: 5,
-    message: "Too many requests , Please try again Later"
-})
+// Rate limiting middleware - will turn it on later 
+// const authLimiter = rateLimit({
+//     winodowMs: 15*60*1000,
+//     max: 5,
+//     message: "Too many requests , Please try again Later"
+// })
 
-const transactionLimiter = rateLimit({
-    windowMs: 60 * 60 * 1000,
-    max: 100, 
-    message: "Too many requests , please try again later"
-});
+// const transactionLimiter = rateLimit({
+//     windowMs: 60 * 60 * 1000,
+//     max: 100, 
+//     message: "Too many requests , please try again later"
+// });
 
-const analyticsLimiter = rateLimit({
-    windowMs: 60*60*1000,
-    max: 50,
-    message : "Too many requests, Please try again later"
-})
+// const analyticsLimiter = rateLimit({
+//     windowMs: 60*60*1000,
+//     max: 50,
+//     message : "Too many requests, Please try again later"
+// })
 
-app.use('/api/auth', authLimiter, authRoutes);
-app.use('/api/transactions', transactionLimiter, transactionRoutes);
-app.use('/api/analytics', analyticsLimiter, analyticsRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/transactions', transactionRoutes);
+app.use('/api/analytics', analyticsRoutes);
 app.use('/api/users', userRoutes);
 
 // Health check

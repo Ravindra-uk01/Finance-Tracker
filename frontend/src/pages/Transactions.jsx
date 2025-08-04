@@ -13,12 +13,12 @@ const Transactions = () => {
     const fetchData = async () => {
       const params = { ...filters, page: pagination.page, perPage: pagination.perPage };
       const data = await getTransactions(params);
-      setTransactions(data.data);
+      setTransactions(data?.data);
       setPagination({
-        page: data.pagination.page,
-        perPage: data.pagination.perPage,
-        total: data.pagination.total,
-        totalPages: data.pagination.totalPages
+        page: data?.pagination?.page,
+        perPage: data?.pagination?.perPage,
+        total: data?.pagination?.total,
+        totalPages: data?.pagination?.totalPages
       });
     };
     fetchData();
@@ -28,7 +28,7 @@ const Transactions = () => {
     setPagination({ ...pagination, page: newPage });
   };
 
-
+  console.log('Transactions: ', transactions);
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Transactions</h1>
@@ -45,7 +45,7 @@ const Transactions = () => {
           </select>
         
         </div>
-        <TransactionList transactions={transactions}  />
+        <TransactionList transactions={transactions.transactions}  />
         {/* Pagination controls */}
       </div>
     </div>
