@@ -1,4 +1,5 @@
-import React from 'react'
+import { MdOutlineEdit } from "react-icons/md";
+import { MdDeleteOutline } from "react-icons/md";
 
 const TransactionList = ({transactions}) => {
   if (transactions?.length === 0) {
@@ -15,6 +16,7 @@ const TransactionList = ({transactions}) => {
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
@@ -28,6 +30,10 @@ const TransactionList = ({transactions}) => {
                 transaction.type === 'INCOME' ? 'text-green-600' : 'text-red-600'
               }`}>
                 {transaction.amount}
+              </td>
+              <td>
+                <button className="text-blue-600 hover:text-blue-800 bg-blue-400 text-white p-2 rounded"><MdOutlineEdit size={20} /> </button>
+                <button className="text-red-600 hover:text-red-800 ml-2 bg-red-400 text-white p-2 rounded"><MdDeleteOutline size={20} /> </button>
               </td>
             </tr>
           ))}

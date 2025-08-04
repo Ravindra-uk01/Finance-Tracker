@@ -47,6 +47,7 @@ const Transactions = () => {
         </div>
         <TransactionList transactions={transactions.transactions}  />
         {/* Pagination controls */}
+        <Pagination/>
       </div>
     </div>
   )

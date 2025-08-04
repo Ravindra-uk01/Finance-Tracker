@@ -30,11 +30,7 @@ const Layout = ({ children }) => {
                   Transactions
                 </Link>
               </li>
-              <li>
-                <Link to="/analytics" className="hover:text-gray-300">
-                  Analytics
-                </Link>
-              </li>
+              
               {user?.role === "ADMIN" && (
                 <li>
                   <Link to="/admin/users" className="hover:text-gray-300">

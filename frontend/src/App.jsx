@@ -3,7 +3,6 @@ import './App.css'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoute from './components/common/ProtectedRoute'
 import Users from './pages/Admin/Users'
-import Analytics from './pages/Analytics'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -24,7 +23,6 @@ function App() {
             <Route path="/register" element={user ? <Navigate to="/" replace /> : <Register />}  />
             <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/transactions" element={<ProtectedRoute><Transactions /></ProtectedRoute>} />
-            <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
             <Route path="/admin/users" element={<ProtectedRoute ><Users /></ProtectedRoute>} />
           </Routes>
         </Layout>
