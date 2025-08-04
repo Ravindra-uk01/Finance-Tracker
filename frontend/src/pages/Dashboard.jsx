@@ -1,3 +1,6 @@
+import AnalyticsBarChart from '@/components/analytics/charts/AnalyticsBarChart';
+import AnalyticsLinechat from '@/components/analytics/charts/AnalyticsLinechat';
+import AnalyticsPieChart from '@/components/analytics/charts/AnalyticsPieChart';
 import SummaryCards from '@/components/analytics/SummaryCards';
 import { useAuth } from '@/contexts/AuthContext';
 import { getAnalytics } from '@/services/analytics';
@@ -11,8 +14,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getAnalytics(timeRange);
-      setAnalytics(data);
+      const {data} = await getAnalytics(timeRange);
+      setAnalytics(data.analytics);
     };
     fetchData();
   }, [timeRange, user]);
@@ -39,15 +42,18 @@ const Dashboard = () => {
           balance={analytics?.balance} 
         />
         <div className="bg-white p-4 rounded-lg shadow mt-6">
-          <LineChart data={analytics.monthlyData} />
+          <h2 className="text-xl font-semibold mb-4">Monthly Income vs Expenses</h2>
+          <AnalyticsLinechat data={analytics.monthlyData} />
         </div>
       </div>
       <div className="space-y-6">
         <div className="bg-white p-4 rounded-lg shadow">
-          <PieChart data={analytics.categoryData} />
+           <h2 className="text-xl font-semibold mb-4">Expense Distribution</h2>
+          <AnalyticsPieChart data={analytics.categoryData} />
         </div>
         <div className="bg-white p-4 rounded-lg shadow">
-          <BarChart data={analytics.categoryData} />
+           <h2 className="text-xl font-semibold mb-4">Category Spending</h2>
+          <AnalyticsBarChart data={analytics.categoryData} />
         </div>
       </div>
     </div>
