@@ -1,13 +1,18 @@
 const prisma = require("../models/prisma");
-
+const { client } = require("../utils/redis");
 
 const getAnalytics = async (req, res) => {
   try {
-    const { range = 'monthly' } = req.query;
-    console.log('req.user is ', req.user);
+    const { range = "monthly" } = req.query;
     const userId = req.user.id;
     const now = new Date();
     let startDate;
+
+    const cacheKey = `analytics:${req.user.id}:${range}`;
+    const cachedData = await client.get(cacheKey);
+    if (cachedData) {
+      return res.json(JSON.parse(cachedData));
+    }
 
     if (range === "yearly") {
       startDate = new Date(now.getFullYear(), 0, 1); // Start of year
@@ -67,16 +72,19 @@ const getAnalytics = async (req, res) => {
       })
     );
 
-    res.status(200).json({ 
-        message: "Analytics data fetched successfully",
-        analytics: {
-          totalIncome,
-          totalExpense,
-          balance: totalIncome - totalExpense,
-          monthlyData,
-          categoryData,
-        }
-  });
+    const analytics = {
+      totalIncome,
+      totalExpense,
+      balance: totalIncome - totalExpense,
+      monthlyData,
+      categoryData,
+    };
+
+    await client.set(cacheKey, JSON.stringify(analytics), {
+      EX: 900,
+    });
+
+    res.status(200).json(analytics);
   } catch (error) {
     console.error("Error fetching analytics data:", error);
     res.status(500).json({ error: "Failed to fetch analytics data" });

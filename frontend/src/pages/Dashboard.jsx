@@ -14,7 +14,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await getAnalytics(timeRange);
-      setAnalytics(data.analytics);
+      setAnalytics(data);
     };
     fetchData();
   }, [timeRange, user]);

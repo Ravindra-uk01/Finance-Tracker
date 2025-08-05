@@ -1,4 +1,5 @@
 const prisma = require("../models/prisma");
+const { client } = require("../utils/redis");
 
 const getTransactions = async (req, res) => {
   try {
@@ -11,8 +12,6 @@ const getTransactions = async (req, res) => {
       page = 1,
       perPage = 10,
     } = req.query;
-
-    console.log("Query params: ", req.query);
 
     const offset = (page - 1) * perPage;
     const where = {
@@ -36,7 +35,6 @@ const getTransactions = async (req, res) => {
       };
     }
     if (search) where.description = { contains: search, mode: 'insensitive' };
-    console.log('search is ', search)
  
     const [transactions, total] = await Promise.all([
       prisma.transaction.findMany({
@@ -77,6 +75,8 @@ const createTransaction = async (req, res) => {
       },
     });
 
+    await client.del(`analytics:${req.user.id}`);
+
     res.status(201).json({
       message: "Transaction created successfully",
       transaction,
@@ -112,6 +112,13 @@ const updateTransaction = async (req, res) => {
     // user can edit its own transactions and admin all transactions
     if (req.user.role !== "ADMIN" && transaction.userId !== req.user.id) {
       return res.status(403).json({ error: "Unauthorized" });
+    }
+
+     // Invalidate analytics cache
+     await client.del(`analytics:${req.user.id}`);
+    if (transaction.userId !== req.user.id) {
+      // If admin updated another user's transaction, invalidate that user's cache
+       await client.del(`analytics:${transaction.userId}`);
     }
 
     res.status(200).json({
