@@ -63,9 +63,13 @@ const getTransactions = async (req, res) => {
 
 const createTransaction = async (req, res) => {
   try {
+    const {date, ...rest} = req.body;
+    
+    const parsedDate = new Date(date);
     const transaction = await prisma.transaction.create({
       data: {
-        ...req.body,
+        ...rest,
+        date: parsedDate,
         userId: req.user.id,
       },
     });
@@ -75,6 +79,7 @@ const createTransaction = async (req, res) => {
       transaction,
     });
   } catch (error) {
+    console.error("Error creating transaction: ", error);
     res.status(500).json({ error: "Failed to create transaction" });
   }
 };
@@ -82,7 +87,9 @@ const createTransaction = async (req, res) => {
 const updateTransaction = async (req, res) => {
   try {
     const { id } = req.params;
-
+    const {date, ...rest} = req.body;
+    
+    const parsedDate = new Date(date);
     const transactionExists = await prisma.transaction.findUnique({
       where: { id: parseInt(id) },
     });
@@ -94,7 +101,8 @@ const updateTransaction = async (req, res) => {
     const transaction = await prisma.transaction.update({
       where: { id: parseInt(id) },
       data: {
-        ...req.body,
+        ...rest,
+        date: parsedDate,
       },
     });
 
@@ -108,6 +116,7 @@ const updateTransaction = async (req, res) => {
       transaction,
     });
   } catch (error) {
+    console.error("Error updating transaction: ", error);
     res.status(500).json({ error: "Failed to update transaction" });
   }
 };
@@ -136,6 +145,7 @@ const deleteTransaction = async (req, res) => {
 
     res.status(200).json({ message: `Transaction ${id} deleted successfully` });
   } catch (error) {
+    console.error("Error deleting transaction: ", error);
     res.status(500).json({ error: "Failed to delete transaction" });
   }
 };

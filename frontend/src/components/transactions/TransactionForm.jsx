@@ -18,7 +18,10 @@ const TransactionForm = ({ onAdd, onUpdate, onCancel, editingTransaction }) => {
 
   useEffect(() => {
     if (editingTransaction) {
-      setFormData(editingTransaction);
+
+      setFormData({...editingTransaction,
+        date: new Date(editingTransaction.date).toISOString().split('T')[0]
+      });
     }
   }, [editingTransaction]);
 

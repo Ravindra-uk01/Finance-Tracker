@@ -9,7 +9,7 @@ export const createTransaction = (data) => {
 };
 
 export const updateTransaction = (id, data) => {
-  return api.put(`/api/transactions/${id}`, data);
+  return api.patch(`/api/transactions/${id}`, data);
 };
 
 export const deleteTransaction = (id) => {
