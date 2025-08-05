@@ -1,7 +1,7 @@
 import { MdOutlineEdit } from "react-icons/md";
 import { MdDeleteOutline } from "react-icons/md";
 
-const TransactionList = ({transactions}) => {
+const TransactionList = ({transactions, onEdit, onDelete}) => {
   if (transactions?.length === 0) {
     return <div>No transactions found.</div>;
   }
@@ -32,8 +32,8 @@ const TransactionList = ({transactions}) => {
                 {transaction.amount}
               </td>
               <td>
-                <button className="text-blue-600 hover:text-blue-800 bg-blue-400 text-white p-2 rounded"><MdOutlineEdit size={20} /> </button>
-                <button className="text-red-600 hover:text-red-800 ml-2 bg-red-400 text-white p-2 rounded"><MdDeleteOutline size={20} /> </button>
+                <button className="text-blue-600 hover:text-blue-800 bg-blue-400 text-white p-2 rounded" onClick={onEdit}><MdOutlineEdit size={20} /> </button>
+                <button className="text-red-600 hover:text-red-800 ml-2 bg-red-400 text-white p-2 rounded" onClick={onDelete} ><MdDeleteOutline size={20} /> </button>
               </td>
             </tr>
           ))}
