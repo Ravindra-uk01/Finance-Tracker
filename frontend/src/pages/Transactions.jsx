@@ -1,6 +1,7 @@
 import TransactionForm from "@/components/transactions/TransactionForm";
 import TransactionList from "@/components/transactions/TransactionList";
 import { Alert } from "@/components/ui/alert";
+import { Input } from "@/components/ui/input";
 import { useAuth } from "@/contexts/AuthContext";
 import useDebounce from "@/hooks/useDebounce";
 import {
@@ -23,8 +24,6 @@ const Transactions = () => {
     type: "",
     category: "",
     search: "",
-    startDate: '',
-    endDate: ''
   });
   const [showForm, setShowForm] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState(null);
@@ -58,6 +57,7 @@ const allCategories = [...new Set([...categories.income, ...categories.expense])
 
 
   const debouncedSearch = useDebounce(search, 500);
+  console.log('debound ', debouncedSearch);
   useEffect(()=>{
     if (debouncedSearch) {
       setFilters((prev) => ({ ...prev, search: debouncedSearch }));
@@ -65,6 +65,7 @@ const allCategories = [...new Set([...categories.income, ...categories.expense])
       setFilters((prev) => ({ ...prev, search: "" }));
     }
   }, [debouncedSearch])
+
 
   const handlePageChange = (newPage) => {
     setPagination({ ...pagination, page: newPage });
@@ -166,6 +167,7 @@ const allCategories = [...new Set([...categories.income, ...categories.expense])
     setEditingTransaction(null);
   };
 
+  console.log('search is ', search)
   // console.log("Transactions: ", transactions);
   // console.log("Pagination: ", pagination);
   return (
@@ -196,14 +198,14 @@ const allCategories = [...new Set([...categories.income, ...categories.expense])
             ))}
           </select>
 
-          <input type="search" value={search} onChange={(e)=> setSearch(e.target.value)} placeholder="Search... " />
+          <input type="search" value={search} onChange={(e)=> setSearch(e.target.value)} placeholder="Search Description... " />
          
-          <button
+         { user.role !== "READ_ONLY" && <button
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
             onClick={() => setShowForm(true)}
           >
             + Add Transaction
-          </button>
+          </button>}
         </div>
         <TransactionList
           transactions={transactions}

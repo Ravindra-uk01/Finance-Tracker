@@ -4,15 +4,19 @@ import { Navigate } from 'react-router-dom';
 
 const ProtectedRoute = ({ children, roles = [] }) => {
 
-  const { user, loading } = useAuth();
+  const { user, initialLoading } = useAuth();
 
-  if (loading) {
+  if (initialLoading) {
     return <div>Loading...</div>;
   }
   
   if (!user) {
     return <Navigate to="/login" replace />;
   }
+
+  // if (!user) {
+  //   return <Navigate to={`/login?redirect=${location.pathname}`} replace />;
+  // }
   
   if (roles.length > 0 && !roles.includes(user.role)) {
     return <Navigate to="/" replace />;

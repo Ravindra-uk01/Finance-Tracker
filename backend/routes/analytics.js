@@ -4,6 +4,6 @@ const analyticsController = require('../controllers/analyticsController');
 const { authMiddleware, authorize } = require('../middlewares/auth');
 
 router.use(authMiddleware);
-router.get('/', authorize(['ADMIN', 'USER', 'READONLY']), analyticsController.getAnalytics);
+router.get('/',  analyticsController.getAnalytics);
 
 module.exports = router;

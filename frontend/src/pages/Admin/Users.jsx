@@ -9,8 +9,8 @@ const Users = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const data = await getUsers();
-        setUsers(data);
+        const {data} = await getUsers();
+        setUsers(data.users);
       } catch (err) {
         console.error('Failed to fetch users:', err);
       } finally {
@@ -22,6 +22,9 @@ const Users = () => {
 
   if (loading) return <div>Loading users...</div>;
 
+  if(users?.length === 0) return <div>No Users Found. </div>
+
+  console.log('users is ', users );
   return (
      <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">User Management</h1>
@@ -38,7 +41,7 @@ const Users = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {users.map(user => (
+            { users?.map(user => (
               <tr key={user.id}>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{user.id}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{user.name}</td>

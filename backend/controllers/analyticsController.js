@@ -41,7 +41,7 @@ const getAnalytics = async (req, res) => {
         monthlySummary[key] = { income: 0, expense: 0 };
       }
 
-      if (transaction.type === "INCOME") {
+      if (transaction.type === "income") {
         monthlySummary[key].income += transaction.amount;
         totalIncome += transaction.amount;
       } else {

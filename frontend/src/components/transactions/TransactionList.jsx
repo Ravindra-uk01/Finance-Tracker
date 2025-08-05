@@ -1,7 +1,10 @@
+import { useAuth } from "@/contexts/AuthContext";
 import { MdOutlineEdit } from "react-icons/md";
 import { MdDeleteOutline } from "react-icons/md";
 
 const TransactionList = ({transactions, onEdit, onDelete}) => {
+
+  const {user} = useAuth();
   if (transactions?.length === 0) {
     return <div>No transactions found.</div>;
   }
@@ -16,7 +19,7 @@ const TransactionList = ({transactions, onEdit, onDelete}) => {
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+            { user.role !== "READ_ONLY" &&  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>}
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
@@ -27,14 +30,14 @@ const TransactionList = ({transactions, onEdit, onDelete}) => {
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{transaction.category}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{transaction.type}</td>
               <td className={`px-6 py-4 whitespace-nowrap text-sm ${
-                transaction.type === 'INCOME' ? 'text-green-600' : 'text-red-600'
+                transaction.type === 'income' ? 'text-green-600' : 'text-red-600'
               }`}>
                 {transaction.amount}
               </td>
-              <td>
+              { user.role !== "READ_ONLY" &&<td>
                 <button className="text-blue-600 hover:text-blue-800 bg-blue-400 text-white p-2 rounded" onClick={()=>onEdit(transaction)}><MdOutlineEdit size={20} /> </button>
                 <button className="text-red-600 hover:text-red-800 ml-2 bg-red-400 text-white p-2 rounded" onClick={()=>onDelete(transaction.id)} ><MdDeleteOutline size={20} /> </button>
-              </td>
+              </td>}
             </tr>
           ))}
         </tbody>

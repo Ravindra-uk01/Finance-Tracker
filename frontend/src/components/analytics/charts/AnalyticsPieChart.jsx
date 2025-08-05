@@ -23,7 +23,7 @@ const AnalyticsPieChart = ({data}) => {
       return (
         <div className="bg-white p-3 border border-gray-200 shadow-md rounded">
           <p className="font-medium">{item.name}</p>
-          <p>Amount: ${item.payload.value.toLocaleString()}</p>
+          <p>Amount: ₹{item.payload.value.toLocaleString()}</p>
           <p>Percentage: {percentage}%</p>
         </div>
       );

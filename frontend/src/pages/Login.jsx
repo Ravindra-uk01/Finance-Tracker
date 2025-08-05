@@ -2,23 +2,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/contexts/AuthContext";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
   const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
-  const { login , user} = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
+  const { login, user } = useAuth();
   const navigate = useNavigate();
-
-  //  useEffect(() => {
-  //   if (user) {
-  //     navigate("/");
-  //   }
-  // }, [user, navigate]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -28,17 +25,17 @@ const Login = () => {
     });
   };
 
-   const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
-    
+
     try {
       await login(userData);
-      navigate('/');
+      navigate("/");
     } catch (err) {
-      console.log('Login failed', err);
-      setError('Invalid credentials');
+      console.log("Login failed", err);
+      setError("Invalid credentials");
     } finally {
       setLoading(false);
     }
@@ -65,24 +62,26 @@ const Login = () => {
             />
           </div>
 
-          <div className="flex gap-2 ">
+          <div className="flex gap-2 items-center  relative">
             <label className="text-xl font-semibold">Password</label>
             <Input
               id="password"
               name="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
               value={userData.password}
               onChange={handleInputChange}
               required
             />
+            <div
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
+            </div>
           </div>
 
-          <Button
-            type="submit"
-          >
-            {loading ? "Logging in..." : "Login"}
-          </Button>
+          <Button type="submit">{loading ? "Logging in..." : "Login"}</Button>
         </div>
       </form>
 

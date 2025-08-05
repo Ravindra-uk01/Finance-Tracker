@@ -18,12 +18,12 @@ export const AnalyticsLinechat = ({data}) => {
         <CartesianGrid strokeDasharray="3 3"  />
         <XAxis dataKey="name" />
         <YAxis 
-          tickFormatter={(value) => `$${value.toLocaleString()}`} 
+          tickFormatter={(value) => `₹${value.toLocaleString()}`} 
           width={80}
         />
 
         <Tooltip 
-          formatter={(value) => [`$${value.toLocaleString()}`, 'Amount']}
+          formatter={(value) => [`₹${value.toLocaleString()}`, 'Amount']}
         />
         <Legend />
         <Line 

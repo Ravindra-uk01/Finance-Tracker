@@ -5,6 +5,7 @@ const getTransactions = async (req, res) => {
     const {
       type,
       category,
+      search,
       startData,
       endDate,
       page = 1,
@@ -34,7 +35,9 @@ const getTransactions = async (req, res) => {
         lte: new Date(endDate),
       };
     }
-
+    if (search) where.description = { contains: search, mode: 'insensitive' };
+    console.log('search is ', search)
+ 
     const [transactions, total] = await Promise.all([
       prisma.transaction.findMany({
         where,

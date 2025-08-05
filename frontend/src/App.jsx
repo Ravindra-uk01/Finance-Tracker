@@ -12,18 +12,16 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 
 function App() {
 
-  const {user} = useAuth();
-
   return (
   
      <Router>
         <Layout>
           <Routes>
-            <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login />} />
-            <Route path="/register" element={user ? <Navigate to="/" replace /> : <Register />}  />
+            <Route path="/login" element={ <Login />} />
+            <Route path="/register" element={<Register />}  />
             <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/transactions" element={<ProtectedRoute><Transactions /></ProtectedRoute>} />
-            <Route path="/admin/users" element={<ProtectedRoute ><Users /></ProtectedRoute>} />
+            <Route path="/admin/users" element={<ProtectedRoute roles={['ADMIN']} ><Users /></ProtectedRoute>} />
           </Routes>
         </Layout>
       </Router>

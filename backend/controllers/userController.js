@@ -3,6 +3,9 @@ const prisma = require("../models/prisma");
 const getUsers = async (req, res) => {
   try {
     const users = await prisma.user.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
       select: {
         id: true,
         name: true,
