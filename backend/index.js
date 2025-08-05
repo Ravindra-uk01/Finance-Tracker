@@ -18,27 +18,27 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Rate limiting middleware - will turn it on later 
-// const authLimiter = rateLimit({
-//     winodowMs: 15*60*1000,
-//     max: 5,
-//     message: "Too many requests , Please try again Later"
-// })
+const authLimiter = rateLimit({
+    winodowMs: 15*60*1000,
+    max: 5,
+    message: "Too many requests , Please try again Later"
+})
 
-// const transactionLimiter = rateLimit({
-//     windowMs: 60 * 60 * 1000,
-//     max: 100, 
-//     message: "Too many requests , please try again later"
-// });
+const transactionLimiter = rateLimit({
+    windowMs: 60 * 60 * 1000,
+    max: 100, 
+    message: "Too many requests , please try again later"
+});
 
-// const analyticsLimiter = rateLimit({
-//     windowMs: 60*60*1000,
-//     max: 50,
-//     message : "Too many requests, Please try again later"
-// })
+const analyticsLimiter = rateLimit({
+    windowMs: 60*60*1000,
+    max: 50,
+    message : "Too many requests, Please try again later"
+})
 
-app.use('/api/auth', authRoutes);
-app.use('/api/transactions', transactionRoutes);
-app.use('/api/analytics', analyticsRoutes);
+app.use('/api/auth',authLimiter, authRoutes);
+app.use('/api/transactions',transactionLimiter, transactionRoutes);
+app.use('/api/analytics',analyticsLimiter, analyticsRoutes);
 app.use('/api/users', userRoutes);
 
 // Health check

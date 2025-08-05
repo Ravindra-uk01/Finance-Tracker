@@ -18,7 +18,7 @@ const getTransactions = async (req, res) => {
       deleted: false,
     };
 
-    if (req.user.role !== "ADMIN") {
+    if (req.user.role) {
       where.userId = req.user.id;
     }
 
