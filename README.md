@@ -6,6 +6,19 @@ transactions with powerful analytics, **role-based access control
 
 ------------------------------------------------------------------------
 
+## Credentials
+1. For Admin
+   email - admin@gmail.com
+   password - Admin@123
+
+2. For User
+   email - rohan@gmail.com
+   password - Rohan@123
+
+3. Read-only user
+   email - testuser3@gmail.com
+   password - Test@123
+
 ## ✨ Features
 
 ### 1. **User Authentication**
