@@ -1,17 +1,9 @@
-#!/bin/bash
-set -e # Exit on error
+#!/usr/bin/env bash
+# Exit on error
+set -o errexit
 
 # Install dependencies
 npm install
 
-# Fix Prisma permissions
-chmod +x node_modules/prisma/build/index.js
-
-# Generate Prisma client
+# Generate Prisma Client for Render's environment
 npx prisma generate
-
-# Apply database migrations
-npx prisma migrate deploy
-
-# Start the application
-node index.js
