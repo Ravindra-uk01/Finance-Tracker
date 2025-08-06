@@ -8,11 +8,12 @@ const getAnalytics = async (req, res) => {
     const now = new Date();
     let startDate;
 
-    const cacheKey = `analytics:${req.user.id}:${range}`;
-    const cachedData = await client.get(cacheKey);
-    if (cachedData) {
-      return res.json(JSON.parse(cachedData));
-    }
+    // need to test this will then apply - 
+    // const cacheKey = `analytics:${req.user.id}:${range}`;
+    // const cachedData = await client.get(cacheKey);
+    // if (cachedData) {
+    //   return res.json(JSON.parse(cachedData));
+    // }
 
     if (range === "yearly") {
       startDate = new Date(now.getFullYear(), 0, 1); // Start of year
@@ -80,9 +81,9 @@ const getAnalytics = async (req, res) => {
       categoryData,
     };
 
-    await client.set(cacheKey, JSON.stringify(analytics), {
-      EX: 900,
-    });
+    // await client.set(cacheKey, JSON.stringify(analytics), {
+    //   EX: 900,
+    // });
 
     res.status(200).json(analytics);
   } catch (error) {
