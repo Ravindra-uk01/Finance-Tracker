@@ -62,28 +62,30 @@ A **full-stack web application** for managing income and expense transactions wi
 
 ## 📂 Project Structure
 
+```plaintext
 finance-tracker/
 │
 ├── backend/
-│ ├── prisma/ # Prisma schema and migrations
-│ ├── src/
-│ │ ├── controllers/ # Route controllers
-│ │ ├── middleware/ # Auth & RBAC middlewares
-│ │ ├── routes/ # Express routes
-│ │ ├── utils/ # Utility functions
-│ │ └── index.js # App entry point
-│ └── package.json
+│   ├── prisma/          # Prisma schema and migrations
+│   ├── src/
+│   │   ├── controllers/ # Route controllers
+│   │   ├── middleware/  # Auth & RBAC middlewares
+│   │   ├── routes/      # Express routes
+│   │   ├── utils/       # Utility functions
+│   │   └── index.js     # App entry point
+│   └── package.json
 │
 ├── frontend/
-│ ├── src/
-│ │ ├── components/ # Reusable UI components
-│ │ ├── context/ # React Context API (auth, theme)
-│ │ ├── hooks/ # Custom hooks
-│ │ ├── pages/ # Pages for routes
-│ │ └── App.jsx
-│ └── package.json
+│   ├── src/
+│   │   ├── components/  # Reusable UI components
+│   │   ├── context/     # React Context API (auth, theme)
+│   │   ├── hooks/       # Custom hooks
+│   │   ├── pages/       # Pages for routes
+│   │   └── App.jsx
+│   └── package.json
 │
 └── README.md
+
 
 
 ---
@@ -121,10 +123,12 @@ git clone https://github.com/your-username/finance-tracker.git
 cd finance-tracker
 
 
-2. Setup Backend
+### **2. Setup Backend** 
+```bash
 cd backend
 
 Install dependencies:
+```bash
 npm install
 Create .env file:
 
@@ -145,7 +149,7 @@ npm run dev
 
 Backend runs at backend url
 
-3. Setup Frontend
+### **3. Setup Frontend** 
 
 cd ../frontend
 
@@ -160,18 +164,18 @@ npm run dev
 
 Frontend runs at frontend url
 
-4. Run Redis (for caching)
+### **4. Run Redis (for caching)** 
 Ensure Redis server is running locally:
 redis-server
 
-5. Default Roles
+### **5. Default Roles** 
 By default, new users are assigned the role user.
 
 To create an admin, update the role in the database:
 UPDATE users SET role='ADMIN' WHERE email='admin@example.com';
 
 
-📜 Available Scripts
+### **📜 Available Scripts** 
 Backend
 npm run dev → Start development server
 npm run build → Build for production
