@@ -3,7 +3,7 @@
 set -o errexit
 
 # Install dependencies
-npm install
+npm install --include=dev
 
 # Generate Prisma Client for Render's environment
 npx prisma generate
